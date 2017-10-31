@@ -63,14 +63,14 @@ const app = (Page, options, prepareProps) => {
         providers,
       });
       
-      if (prepareProps) {
-        await prepareProps(controller);
-      }
-
       controller.setState('auth.token', token);
       controller.setState('navigation.currentRoute', { query: context.query, pathname: context.pathname });
       // Load initial props from page components (pass on context and universal controller)
       const pageInitialProps = await loadGetInitialProps(Page, { ...context });
+
+      if (prepareProps) {
+        await prepareProps(controller);
+      }
 
       if (isServer) {
         return {
