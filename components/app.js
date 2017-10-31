@@ -37,7 +37,7 @@ const errorHandler = ({ props }) => {
   }
 };
 
-const app = (Page, options) => {
+const app = (Page, options, prepareProps) => {
   const { requireAuth = true } = options || {};
 
   class App extends Component {
@@ -62,10 +62,15 @@ const app = (Page, options) => {
         modules,
         providers,
       });
+      
+      if (prepareProps) {
+        await prepareProps(controller);
+      }
+
       controller.setState('auth.token', token);
       controller.setState('navigation.currentRoute', { query: context.query, pathname: context.pathname });
       // Load initial props from page components (pass on context and universal controller)
-      const pageInitialProps = await loadGetInitialProps(Page, { controller, ...context });
+      const pageInitialProps = await loadGetInitialProps(Page, { ...context });
 
       if (isServer) {
         return {

@@ -10,15 +10,9 @@ const HomePage = () => (
   </div>
 );
 
-HomePage.getInitialProps = async ({ query, req, controller }) => {
-  await controller.runSequence('app.fetchPosts', {
+export default app(HomePage, {}, async controller => {
+  return controller.runSequence('app.fetchPosts', {
     skip: 0,
     first: POSTS_PER_PAGE
   });
-  return {
-    // Return changes if you simply want to load data without listening for state in sub-components
-    // changes: controller.getChanges(),
-  };
-};
-// export default HomePage;
-export default app(HomePage);
+});
