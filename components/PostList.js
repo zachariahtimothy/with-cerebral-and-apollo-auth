@@ -3,6 +3,7 @@ import { state } from 'cerebral/tags';
 import PostUpvoter from './PostUpvoter'
 
 const PostList = ({ allPosts, ...rest }) => {
+  console.log('allPosts', allPosts)
   if (!allPosts) {
     return <p>Loading...</p>;
   }

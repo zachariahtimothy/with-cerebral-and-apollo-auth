@@ -90,7 +90,8 @@ const app = (Page, options, prepareProps) => {
       super(props);
 
       const { token, stateChanges, apolloData } = props;
-
+      // ISSUE: When client handles render, stateChanges is undefined but we are passing in the modules again,
+      //  causing the state to be reset on each client page load.
       this.apollo = initApollo(token);
 
       const providers = [
